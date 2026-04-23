@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>المساعد الذكي — العقبة</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo"><i class="fas fa-anchor"></i><span>العقبة</span></div>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> عن العقبة</a></li>
+        <li><a href="tourism.html"><i class="fas fa-map-marked-alt"></i> السياحة</a></li>
+        <li><a href="diving.html"><i class="fas fa-fish"></i> الغوص</a></li>
+        <li><a href="history.html"><i class="fas fa-landmark"></i> التاريخ</a></li>
+        <li><a href="hotels.html"><i class="fas fa-hotel"></i> الفنادق</a></li>
+        <li><a href="food.html"><i class="fas fa-utensils"></i> المطاعم</a></li>
+        <li><a href="gallery.html"><i class="fas fa-images"></i> المعرض</a></li>
+        <li><a href="ai.html" class="ai-btn active"><i class="fas fa-robot"></i> مساعد ذكي</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- AI PAGE -->
+  <div class="ai-page">
+    <div class="ai-header">
+      <div class="ai-icon-big"><i class="fas fa-robot"></i></div>
+      <h1>المساعد الذكي للعقبة</h1>
+      <p>اسألني عن أي شيء يخص مدينة العقبة — السياحة، التاريخ، الفنادق، المطاعم، وأكثر!</p>
+    </div>
+
+    <div class="ai-chat-wrapper">
+      <!-- Suggestions -->
+      <div class="ai-suggestions" id="suggestions">
+        <button class="ai-suggestion" onclick="askSuggestion(this)">ما هي أفضل الأماكن السياحية في العقبة؟</button>
+        <button class="ai-suggestion" onclick="askSuggestion(this)">ما هو أفضل وقت لزيارة العقبة؟</button>
+        <button class="ai-suggestion" onclick="askSuggestion(this)">ما هي أفضل فنادق العقبة؟</button>
+        <button class="ai-suggestion" onclick="askSuggestion(this)">أين أجد أفضل مطاعم المأكولات البحرية؟</button>
+        <button class="ai-suggestion" onclick="askSuggestion(this)">كيف أصل إلى العقبة؟</button>
+        <button class="ai-suggestion" onclick="askSuggestion(this)">ما هي تكلفة الإقامة في العقبة؟</button>
+      </div>
+
+      <!-- Chat Box -->
+      <div class="ai-chat-box" id="chatBox">
+        <!-- Welcome message -->
+        <div class="chat-message bot">
+          <div class="chat-avatar"><i class="fas fa-robot"></i></div>
+          <div class="chat-bubble">
+            مرحباً بك! 👋 أنا مساعدك الذكي المتخصص في مدينة العقبة الأردنية. يمكنني الإجابة على جميع أسئلتك حول:
+            <br><br>
+            🏖️ <strong>السياحة والشواطئ</strong><br>
+            🤿 <strong>الغوص والأنشطة البحرية</strong><br>
+            🏰 <strong>التاريخ والمعالم الأثرية</strong><br>
+            🏨 <strong>الفنادق والإقامة</strong><br>
+            🍽️ <strong>المطاعم والطعام</strong><br>
+            ✈️ <strong>المواصلات والوصول</strong><br>
+            <br>
+            ما الذي تريد معرفته عن العقبة؟
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="ai-input-area">
+        <input type="text" id="userInput" placeholder="اكتب سؤالك هنا..." onkeydown="if(event.key==='Enter') sendMessage()" />
+        <button class="ai-send-btn" onclick="sendMessage()" id="sendBtn">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    // ===== AI KNOWLEDGE BASE =====
+    const aqabaKnowledge = {
+      greetings: ["مرحبا", "هلا", "السلام", "صباح", "مساء", "أهلا", "هاي", "hi", "hello"],
+      
+      topics: {
+        location: {
+          keywords: ["أين", "موقع", "تقع", "وين", "مكان", "خريطة"],
+          answer: `📍 <strong>موقع مدينة العقبة:</strong><br><br>
+تقع العقبة في الجنوب الغربي من المملكة الأردنية الهاشمية، على الطرف الشمالي الشرقي من خليج العقبة في البحر الأحمر.<br><br>
+تتميز بموقعها الاستراتيجي الفريد عند ملتقى أربع دول:<br>
+🇯🇴 <strong>الأردن</strong> — 🇸🇦 <strong>السعودية</strong> — 🇮🇱 <strong>إسرائيل</strong> — 🇪🇬 <strong>مصر</strong><br><br>
+تبعد عن عمّان حوالي <strong>335 كيلومتراً</strong> جنوباً، وتُعدّ الميناء البحري الوحيد للأردن.`
+        },
+        
+        tourism: {
+          keywords: ["سياحة", "أماكن", "معالم", "زيارة", "وجهات", "أنشطة", "ترفيه", "شاطئ", "شواطئ"],
+          answer: `🏖️ <strong>أبرز المعالم السياحية في العقبة:</strong><br><br>
+1. <strong>شواطئ العقبة الذهبية</strong> — 27 كم من الشواطئ الرائعة بمياه فيروزية<br>
+2. <strong>عمود علم الثورة العربية</strong> — أحد أطول أعمدة الأعلام في العالم (137م)<br>
+3. <strong>قلعة العقبة التاريخية</strong> — بُنيت في القرن 16 الميلادي<br>
+4. <strong>مرسى العقبة</strong> — مرسى حديث بمطاعم ومحلات<br>
+5. <strong>محمية الشعاب المرجانية</strong> — من أجمل مواقع الغوص عالمياً<br>
+6. <strong>الكورنيش البحري</strong> — للتنزه ومشاهدة الغروب<br><br>
+🎯 <strong>أنشطة مقترحة:</strong> الغوص، ركوب الأمواج، رحلات القوارب، صيد الأسماك، ركوب الجمال`
+        },
+        
+        diving: {
+          keywords: ["غوص", "غطس", "بحر", "شعاب", "مرجان", "أسماك", "سباحة", "ماء", "بحري"],
+          answer: `🤿 <strong>الغوص في العقبة:</strong><br><br>
+تُعدّ العقبة من <strong>أفضل 10 وجهات غوص في العالم!</strong><br><br>
+<strong>مميزات الغوص:</strong><br>
+• رؤية تصل إلى <strong>30 متراً</strong> تحت الماء<br>
+• أكثر من <strong>500 نوع من الأسماك</strong><br>
+• <strong>250 نوعاً</strong> من الشعاب المرجانية<br>
+• درجة حرارة الماء: <strong>20-27°م</strong> طوال العام<br><br>
+<strong>أشهر مواقع الغوص:</strong><br>
+🐠 حديقة المرجان (للمبتدئين)<br>
+🦈 الحافة الجنوبية (للمتقدمين)<br>
+🌙 الغوص الليلي (تجربة فريدة)<br><br>
+<strong>الحياة البحرية:</strong> سلاحف البحر، أسماك المهرج، سمكة الأسد، الأخطبوط وأكثر!`
+        },
+        
+        history: {
+          keywords: ["تاريخ", "قديم", "حضارة", "قلعة", "أثري", "عريق", "ثورة", "عثماني"],
+          answer: `🏰 <strong>تاريخ مدينة العقبة:</strong><br><br>
+تمتد جذور العقبة لأكثر من <strong>6000 سنة</strong>! كانت تُعرف قديماً باسم <strong>"أيلة"</strong>.<br><br>
+<strong>أبرز المحطات التاريخية:</strong><br>
+📅 <strong>4000 ق.م</strong> — أقدم الحضارات البشرية في المنطقة<br>
+📅 <strong>القرن 1 ق.م</strong> — ازدهار تجاري في عهد الأنباط<br>
+📅 <strong>106 م</strong> — الحقبة الرومانية (أيلانا)<br>
+📅 <strong>630 م</strong> — الفتح الإسلامي<br>
+📅 <strong>1116 م</strong> — الحروب الصليبية<br>
+📅 <strong>1516 م</strong> — بناء القلعة العثمانية<br>
+📅 <strong>1916 م</strong> — الثورة العربية الكبرى<br>
+📅 <strong>2001 م</strong> — تأسيس المنطقة الاقتصادية الخاصة<br><br>
+<strong>قلعة العقبة</strong> من أبرز المعالم التاريخية، تضم متحفاً للقطع الأثرية.`
+        },
+        
+        hotels: {
+          keywords: ["فندق", "فنادق", "إقامة", "نوم", "سكن", "منتجع", "حجز", "غرفة"],
+          answer: `🏨 <strong>أفضل فنادق العقبة:</strong><br><br>
+<strong>⭐⭐⭐⭐⭐ خمس نجوم:</strong><br>
+• <strong>المنارة — لاكشري كولكشن</strong> (ماريوت) — تصميم أردني أصيل<br>
+• <strong>إنتركونتيننتال العقبة</strong> — شاطئ خاص 300م<br>
+• <strong>منتجع أيلة</strong> — فيلات ومرسى خاص<br><br>
+<strong>⭐⭐⭐⭐ أربع نجوم:</strong><br>
+• <strong>لاكسوتيل بيتش ريزورت</strong> — مسبح لانهائي<br>
+• <strong>فندق العقبة الكبير</strong> — موقع مركزي<br><br>
+<strong>💰 الأسعار التقريبية:</strong><br>
+• فنادق 5 نجوم: 150-500 دينار/ليلة<br>
+• فنادق 4 نجوم: 80-150 دينار/ليلة<br>
+• فنادق 3 نجوم: 40-80 دينار/ليلة<br><br>
+💡 <strong>نصيحة:</strong> احجز مبكراً خاصة في موسم الذروة (ديسمبر - فبراير)`
+        },
+        
+        food: {
+          keywords: ["طعام", "أكل", "مطعم", "مطاعم", "أكلات", "وجبة", "مأكولات", "بحرية", "سمك"],
+          answer: `🍽️ <strong>أشهر مطاعم وأطباق العقبة:</strong><br><br>
+<strong>أشهر المطاعم:</strong><br>
+🐟 <strong>مطعم فخارة</strong> — مأكولات بحرية بإطلالة على البحر<br>
+🌙 <strong>القمر العربي</strong> — أطباق أردنية تقليدية<br>
+⚓ <strong>أيلة مارينا</strong> — مطعم فاخر في المرسى<br>
+☕ <strong>مقهى البحر الأحمر</strong> — قهوة عربية وحلويات<br><br>
+<strong>أشهر الأطباق:</strong><br>
+🍖 <strong>المنسف</strong> — الطبق الوطني الأردني<br>
+🦐 <strong>الجمبري المشوي</strong> — من أشهر أطباق العقبة<br>
+🐟 <strong>السمك المشوي</strong> — طازج من البحر الأحمر<br>
+🍚 <strong>المقلوبة</strong> — أرز مع الخضار واللحم<br>
+🍯 <strong>الكنافة النابلسية</strong> — حلوى شرقية شهيرة`
+        },
+        
+        weather: {
+          keywords: ["طقس", "جو", "حرارة", "مناخ", "درجة", "صيف", "شتاء", "ربيع", "خريف"],
+          answer: `☀️ <strong>مناخ العقبة:</strong><br><br>
+تتمتع العقبة بأكثر من <strong>350 يوماً مشمساً</strong> في السنة!<br><br>
+<strong>الفصول:</strong><br>
+🌸 <strong>الربيع (مارس-مايو):</strong> 20-30°م — ممتاز للزيارة<br>
+☀️ <strong>الصيف (يونيو-أغسطس):</strong> 35-42°م — حار جداً<br>
+🍂 <strong>الخريف (سبتمبر-نوفمبر):</strong> 22-32°م — جيد جداً<br>
+❄️ <strong>الشتاء (ديسمبر-فبراير):</strong> 15-22°م — مثالي للزيارة<br><br>
+🌊 <strong>درجة حرارة البحر:</strong> 20-27°م طوال العام<br><br>
+⭐ <strong>أفضل وقت للزيارة:</strong> أكتوبر حتى أبريل`
+        },
+        
+        transport: {
+          keywords: ["وصول", "مواصلات", "طيران", "مطار", "سيارة", "حافلة", "كيف أصل", "طريق"],
+          answer: `✈️ <strong>كيف تصل إلى العقبة:</strong><br><br>
+<strong>بالطيران:</strong><br>
+🛫 <strong>مطار الملك الحسين الدولي</strong> يخدم العقبة مباشرة<br>
+• رحلات مباشرة من عمّان، دبي، القاهرة، وغيرها<br><br>
+<strong>بالسيارة:</strong><br>
+🚗 من عمّان: <strong>335 كم</strong> (حوالي 3.5 ساعات) عبر طريق الصحراء<br>
+🚗 من البتراء: <strong>125 كم</strong> (ساعة ونصف)<br><br>
+<strong>بالحافلة:</strong><br>
+🚌 تتوفر حافلات يومية من عمّان والمدن الرئيسية<br><br>
+<strong>من الدول المجاورة:</strong><br>
+🚢 عبر ميناء العقبة من مصر (نويبع)<br>
+🚗 من إيلات الإسرائيلية عبر معبر وادي عربة`
+        },
+        
+        economy: {
+          keywords: ["اقتصاد", "منطقة اقتصادية", "ضريبة", "تجارة", "ميناء", "استثمار"],
+          answer: `💼 <strong>الاقتصاد والمنطقة الاقتصادية الخاصة:</strong><br><br>
+تُعدّ العقبة <strong>منطقة اقتصادية خاصة (ASEZA)</strong> منذ عام 2001.<br><br>
+<strong>المزايا الاقتصادية:</strong><br>
+💰 ضريبة دخل منخفضة <strong>5% فقط</strong><br>
+📦 إعفاء جمركي على معظم البضائع<br>
+🏗️ بيئة استثمارية جاذبة ومتطورة<br>
+⚓ الميناء البحري الوحيد للأردن<br><br>
+<strong>الميناء التجاري:</strong><br>
+يستقبل أكبر السفن التجارية ويُعدّ بوابة الأردن للتجارة الخارجية.`
+        },
+        
+        cost: {
+          keywords: ["تكلفة", "سعر", "أسعار", "ميزانية", "غالي", "رخيص", "كم يكلف"],
+          answer: `💵 <strong>تكلفة الزيارة إلى العقبة:</strong><br><br>
+<strong>الإقامة (في الليلة):</strong><br>
+🏨 فنادق 5 نجوم: 150-500 دينار<br>
+🏨 فنادق 4 نجوم: 80-150 دينار<br>
+🏨 فنادق 3 نجوم: 40-80 دينار<br><br>
+<strong>الطعام:</strong><br>
+🍽️ مطعم فاخر: 25-60 دينار للشخص<br>
+🍽️ مطعم متوسط: 10-25 دينار للشخص<br>
+🍽️ مطعم شعبي: 3-10 دينار للشخص<br><br>
+<strong>الأنشطة:</strong><br>
+🤿 جولة غوص: 35-60 دينار<br>
+🚢 رحلة بحرية: 20-40 دينار<br><br>
+💡 <strong>نصيحة:</strong> العقبة منطقة اقتصادية خاصة، لذا أسعار البضائع والمشتريات أقل من باقي الأردن!`
+        },
+        
+        general: {
+          keywords: ["عقبة", "معلومات", "نبذة", "عامة", "سكان", "مساحة"],
+          answer: `🌊 <strong>معلومات عامة عن مدينة العقبة:</strong><br><br>
+• <strong>الموقع:</strong> جنوب غرب الأردن على البحر الأحمر<br>
+• <strong>المساحة:</strong> 375 كيلومتر مربع<br>
+• <strong>السكان:</strong> أكثر من 188,000 نسمة<br>
+• <strong>اللغة:</strong> العربية (والإنجليزية شائعة الاستخدام)<br>
+• <strong>العملة:</strong> الدينار الأردني (JOD)<br>
+• <strong>المناخ:</strong> صحراوي حار صيفاً، معتدل شتاءً<br>
+• <strong>أيام الشمس:</strong> أكثر من 350 يوماً في السنة<br>
+• <strong>الميناء:</strong> الميناء البحري الوحيد في الأردن<br>
+• <strong>المطار:</strong> مطار الملك الحسين الدولي<br>
+• <strong>التاريخ:</strong> أكثر من 6000 سنة من الحضارة`
+        }
+      }
+    };
+
+    // ===== AI RESPONSE ENGINE =====
+    function getAIResponse(userMessage) {
+      const msg = userMessage.toLowerCase().trim();
+      
+      // Check greetings
+      if (aqabaKnowledge.greetings.some(g => msg.includes(g))) {
+        return `أهلاً وسهلاً! 😊 يسعدني مساعدتك في كل ما يخص مدينة العقبة الجميلة. ما الذي تريد معرفته؟<br><br>يمكنني الإجابة عن: السياحة، الغوص، التاريخ، الفنادق، المطاعم، المواصلات، المناخ، والأسعار.`;
+      }
+      
+      // Check topics
+      for (const [topic, data] of Object.entries(aqabaKnowledge.topics)) {
+        if (data.keywords.some(k => msg.includes(k))) {
+          return data.answer;
+        }
+      }
+      
+      // Check for specific keywords
+      if (msg.includes("شكر") || msg.includes("ممتاز") || msg.includes("رائع") || msg.includes("جيد")) {
+        return `شكراً لك! 😊 يسعدني أنني أفدتك. هل لديك أي سؤال آخر عن العقبة؟`;
+      }
+      
+      if (msg.includes("وداع") || msg.includes("باي") || msg.includes("مع السلامة")) {
+        return `مع السلامة! 👋 أتمنى لك زيارة رائعة لمدينة العقبة الجميلة. لا تتردد في العودة إذا كان لديك أي سؤال!`;
+      }
+      
+      if (msg.includes("بترا") || msg.includes("البتراء")) {
+        return `🏛️ <strong>البتراء والعقبة:</strong><br><br>البتراء تبعد عن العقبة حوالي <strong>125 كيلومتراً</strong> (ساعة ونصف بالسيارة).<br><br>كثير من السياح يجمعون بين زيارة البتراء الوردية والاستمتاع بشواطئ العقبة في رحلة واحدة رائعة!<br><br>هل تريد معرفة المزيد عن العقبة؟`;
+      }
+      
+      if (msg.includes("وادي رم") || msg.includes("رم")) {
+        return `🏜️ <strong>وادي رم والعقبة:</strong><br><br>وادي رم يبعد عن العقبة حوالي <strong>60 كيلومتراً</strong> فقط (45 دقيقة بالسيارة).<br><br>يمكنك الجمع بين تجربة الصحراء الرائعة في وادي رم وشواطئ البحر الأحمر في العقبة في نفس الرحلة!`;
+      }
+      
+      // Default response
+      return `🤔 سؤال جيد! يمكنني مساعدتك في المعلومات المتعلقة بمدينة العقبة.<br><br>
+<strong>المواضيع التي يمكنني الإجابة عنها:</strong><br>
+📍 موقع العقبة وكيفية الوصول<br>
+🏖️ المعالم السياحية والأنشطة<br>
+🤿 الغوص والحياة البحرية<br>
+🏰 التاريخ والمعالم الأثرية<br>
+🏨 الفنادق والإقامة<br>
+🍽️ المطاعم والطعام<br>
+☀️ المناخ وأفضل وقت للزيارة<br>
+💰 التكاليف والأسعار<br><br>
+جرب أن تسألني عن أي من هذه المواضيع!`;
+    }
+
+    // ===== CHAT FUNCTIONS =====
+    function addMessage(text, isUser) {
+      const chatBox = document.getElementById('chatBox');
+      const div = document.createElement('div');
+      div.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+      div.innerHTML = `
+        <div class="chat-avatar">
+          <i class="fas fa-${isUser ? 'user' : 'robot'}"></i>
+        </div>
+        <div class="chat-bubble">${isUser ? escapeHtml(text) : text}</div>
+      `;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function showTyping() {
+      const chatBox = document.getElementById('chatBox');
+      const div = document.createElement('div');
+      div.className = 'chat-message bot';
+      div.id = 'typingIndicator';
+      div.innerHTML = `
+        <div class="chat-avatar"><i class="fas fa-robot"></i></div>
+        <div class="chat-bubble typing-indicator">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      `;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function removeTyping() {
+      const indicator = document.getElementById('typingIndicator');
+      if (indicator) indicator.remove();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      // Add user message
+      addMessage(text, true);
+      input.value = '';
+
+      // Disable send button
+      document.getElementById('sendBtn').disabled = true;
+
+      // Show typing
+      showTyping();
+
+      // Simulate AI thinking
+      const delay = 800 + Math.random() * 700;
+      setTimeout(() => {
+        removeTyping();
+        const response = getAIResponse(text);
+        addMessage(response, false);
+        document.getElementById('sendBtn').disabled = false;
+        
+        // Hide suggestions after first message
+        const suggestions = document.getElementById('suggestions');
+        if (suggestions) suggestions.style.display = 'none';
+      }, delay);
+    }
+
+    function askSuggestion(btn) {
+      document.getElementById('userInput').value = btn.textContent;
+      sendMessage();
+    }
+
+    // Focus input on load
+    document.getElementById('userInput').focus();
+  </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>خريطة العقبة - الأماكن السياحية</title>
+  
+  <!-- تسريع تحميل الخريطة (Preload & Preconnect) -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://basemaps.cartocdn.com" crossorigin>
+  <link rel="preload" as="style" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="preload" as="script" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap"
+    rel="stylesheet" />
+    
+  <style>
+    /* Inline overrides if necessary, but most mapped styles will be in style.css */
+    .map-page-wrapper {
+      padding-top: 70px; /* navbar height */
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .map-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      background: var(--light);
+    }
+    
+    .map-sidebar {
+      width: 350px;
+      background: white;
+      border-left: 1px solid rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+      box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+    }
+    
+    .map-search-header {
+      padding: 20px;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      background: var(--gradient);
+      color: white;
+    }
+    
+    .map-search-header h2 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .search-box {
+      position: relative;
+    }
+    
+    .search-box input {
+      width: 100%;
+      padding: 12px 40px 12px 15px;
+      border-radius: 30px;
+      border: none;
+      outline: none;
+      font-family: var(--font);
+      font-size: 0.95rem;
+    }
+    
+    .search-box i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+    
+    .locations-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 0;
+    }
+    
+    .location-item {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    
+    .location-item:hover, .location-item.active {
+      background: rgba(0,119,182,0.05);
+    }
+    
+    .location-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      flex-shrink: 0;
+      font-size: 1.2rem;
+    }
+    
+    .location-info h4 {
+      font-size: 1.05rem;
+      margin-bottom: 5px;
+      color: var(--dark);
+    }
+    
+    .location-info p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+    
+    .map-container {
+      flex: 1;
+      position: relative;
+    }
+    
+    #map {
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .map-layout {
+        flex-direction: column-reverse;
+      }
+      .map-sidebar {
+        width: 100%;
+        height: 40%;
+        border-left: none;
+        border-top: 1px solid rgba(0,0,0,0.1);
+      }
+      .map-container {
+        height: 60%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <i class="fas fa-anchor"></i>
+        <span>العقبة</span>
+      </div>
+      <button class="nav-toggle" id="navToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> عن العقبة</a></li>
+        <li><a href="tourism.html"><i class="fas fa-map-marked-alt"></i> السياحة</a></li>
+        <li><a href="diving.html"><i class="fas fa-fish"></i> الغوص</a></li>
+        <li><a href="history.html"><i class="fas fa-landmark"></i> التاريخ</a></li>
+        <li><a href="hotels.html"><i class="fas fa-hotel"></i> الفنادق</a></li>
+        <li><a href="food.html"><i class="fas fa-utensils"></i> المطاعم</a></li>
+        <li><a href="gallery.html"><i class="fas fa-images"></i> المعرض</a></li>
+        <li><a href="map.html" class="active"><i class="fas fa-map"></i> تصفح الخريطة</a></li>
+        <li><a href="ai.html" class="ai-btn"><i class="fas fa-robot"></i> مساعد ذكي</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== MAP LAYOUT ===== -->
+  <div class="map-page-wrapper">
+    <div class="map-layout">
+      <!-- Sidebar -->
+      <div class="map-sidebar">
+        <div class="map-search-header">
+          <h2><i class="fas fa-search-location"></i> المواقع في العقبة</h2>
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="mapSearchInput" placeholder="ابحث عن معلم، شاطئ، فندق..." />
+          </div>
+        </div>
+        <div class="locations-list" id="locationsList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+      
+      <!-- Map Area -->
+      <div class="map-container">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- Main JS -->
+  <script src="js/main.js"></script>
+  <!-- Map Logic JS -->
+  <script src="js/map.js"></script>
+</body>
+
+</html>

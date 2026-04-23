@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تاريخ العقبة</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    .timeline { position: relative; padding: 40px 0; }
+    .timeline::before { content: ''; position: absolute; right: 50%; width: 3px; height: 100%; background: var(--gradient); transform: translateX(50%); }
+    .timeline-item { display: flex; justify-content: flex-end; padding-left: 50%; margin-bottom: 40px; position: relative; }
+    .timeline-item:nth-child(even) { justify-content: flex-start; padding-left: 0; padding-right: 50%; }
+    .timeline-content { background: white; border-radius: var(--radius); padding: 25px; box-shadow: var(--shadow); max-width: 400px; position: relative; margin-left: 30px; }
+    .timeline-item:nth-child(even) .timeline-content { margin-left: 0; margin-right: 30px; }
+    .timeline-dot { position: absolute; right: 50%; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; transform: translateX(50%); top: 25px; border: 3px solid white; box-shadow: 0 0 0 3px var(--primary); }
+    .timeline-date { color: var(--primary); font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; }
+    .timeline-content h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .timeline-content p { color: var(--gray); font-size: 0.9rem; line-height: 1.7; }
+    @media(max-width:768px){
+      .timeline::before{right:20px;}
+      .timeline-item,.timeline-item:nth-child(even){justify-content:flex-start;padding-left:50px;padding-right:0;}
+      .timeline-dot{right:20px;transform:none;}
+      .timeline-content,.timeline-item:nth-child(even) .timeline-content{margin-left:0;margin-right:0;max-width:100%;}
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo"><i class="fas fa-anchor"></i><span>العقبة</span></div>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> عن العقبة</a></li>
+        <li><a href="tourism.html"><i class="fas fa-map-marked-alt"></i> السياحة</a></li>
+        <li><a href="diving.html"><i class="fas fa-fish"></i> الغوص</a></li>
+        <li><a href="history.html" class="active"><i class="fas fa-landmark"></i> التاريخ</a></li>
+        <li><a href="hotels.html"><i class="fas fa-hotel"></i> الفنادق</a></li>
+        <li><a href="food.html"><i class="fas fa-utensils"></i> المطاعم</a></li>
+        <li><a href="gallery.html"><i class="fas fa-images"></i> المعرض</a></li>
+        <li><a href="ai.html" class="ai-btn"><i class="fas fa-robot"></i> مساعد ذكي</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero-bg" style="background-image: url('images/castle.webp')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1>تاريخ العقبة</h1>
+      <p>رحلة عبر آلاف السنين من التاريخ والحضارة</p>
+      <div class="breadcrumb"><a href="index.html">الرئيسية</a> <i class="fas fa-chevron-left"></i> <span>التاريخ</span></div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="content-grid">
+        <div class="content-text">
+          <div class="section-tag">إرث حضاري</div>
+          <h2>مدينة عريقة بتاريخ ممتد</h2>
+          <p>تمتد جذور العقبة لأكثر من 6000 سنة، إذ كانت تُعرف قديماً باسم "أيلة" وكانت مركزاً تجارياً مهماً على طريق التوابل القديم الذي يربط شبه الجزيرة العربية بمصر والشام.</p>
+          <p>مرّت العقبة بحقب تاريخية متعاقبة شكّلت هويتها الحضارية الفريدة، من الحضارة النبطية إلى الرومانية فالبيزنطية ثم الإسلامية، وصولاً إلى العصر الحديث.</p>
+        </div>
+        <div class="content-img">
+          <img src="images/fortress.jpg" alt="قلعة العقبة التاريخية" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">الخط الزمني</div>
+        <h2>محطات تاريخية بارزة</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">4000 ق.م</div>
+            <h3>أولى الحضارات</h3>
+            <p>أقدم الدلائل على وجود بشري في منطقة العقبة تعود إلى العصر الحجري الحديث، حيث كانت المنطقة ملتقى للقبائل البدوية.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">القرن الأول ق.م</div>
+            <h3>الحضارة النبطية</h3>
+            <p>ازدهرت أيلة (العقبة) كميناء تجاري مهم في عهد الأنباط، وكانت نقطة عبور رئيسية للبضائع بين الجزيرة العربية والبحر المتوسط.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">106 م</div>
+            <h3>الحقبة الرومانية</h3>
+            <p>ضمّ الإمبراطور تراجان المدينة إلى الإمبراطورية الرومانية وأطلق عليها اسم "أيلانا". شهدت المدينة ازدهاراً تجارياً وعمرانياً كبيراً.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">630 م</div>
+            <h3>الفتح الإسلامي</h3>
+            <p>دخلت أيلة في حكم الدولة الإسلامية في عهد النبي محمد ﷺ، وأصبحت جزءاً من الخلافة الإسلامية. ازدهرت كمركز تجاري وديني مهم.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">1116 م</div>
+            <h3>الحروب الصليبية</h3>
+            <p>احتل الصليبيون المدينة وبنوا قلعة على جزيرة فرعون القريبة. استعادها صلاح الدين الأيوبي عام 1170م وأعاد بناء تحصيناتها.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">1516 م</div>
+            <h3>قلعة العقبة العثمانية</h3>
+            <p>بنى العثمانيون قلعة العقبة الشهيرة التي لا تزال قائمة حتى اليوم. كانت تُستخدم لحماية طريق الحج وتأمين الميناء.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">1916 م</div>
+            <h3>الثورة العربية الكبرى</h3>
+            <p>شهدت العقبة معركة تاريخية قادها الشريف الحسين بن علي بدعم من لورانس العرب، وتحررت المدينة من الحكم العثماني.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">2001 م</div>
+            <h3>المنطقة الاقتصادية الخاصة</h3>
+            <p>أُسست سلطة منطقة العقبة الاقتصادية الخاصة (ASEZA) لتحويل العقبة إلى مركز اقتصادي وسياحي عالمي متطور.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="content-grid reverse">
+        <div class="content-img">
+          <img src="images/castle.webp" alt="قلعة العقبة" />
+        </div>
+        <div class="content-text">
+          <div class="section-tag">قلعة العقبة</div>
+          <h2>قلعة العقبة التاريخية</h2>
+          <p>تُعدّ قلعة العقبة من أبرز المعالم الأثرية في المدينة، بُنيت في العهد المملوكي ثم طوّرها العثمانيون في القرن السادس عشر الميلادي.</p>
+          <p>تتميز القلعة بهندستها المعمارية الفريدة التي تجمع بين الطراز المملوكي والعثماني. تحمل على بوابتها الرئيسية شعار الهاشميين، مما يجعلها رمزاً وطنياً بامتياز.</p>
+          <ul>
+            <li><i class="fas fa-calendar"></i> بُنيت في القرن السادس عشر الميلادي</li>
+            <li><i class="fas fa-map-marker-alt"></i> تقع في وسط المدينة القديمة</li>
+            <li><i class="fas fa-museum"></i> تضم متحفاً يعرض القطع الأثرية</li>
+            <li><i class="fas fa-clock"></i> مفتوحة للزوار يومياً</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><div class="footer-logo"><i class="fas fa-anchor"></i> العقبة</div><p>جوهرة البحر الأحمر</p><div class="footer-social"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div>
+        <div class="footer-links"><h4>روابط سريعة</h4><ul><li><a href="index.html">الرئيسية</a></li><li><a href="tourism.html">السياحة</a></li><li><a href="history.html">التاريخ</a></li></ul></div>
+        <div class="footer-links"><h4>خدمات</h4><ul><li><a href="hotels.html">الفنادق</a></li><li><a href="food.html">المطاعم</a></li><li><a href="ai.html">المساعد الذكي</a></li></ul></div>
+        <div class="footer-contact"><h4>تواصل معنا</h4><p><i class="fas fa-map-marker-alt"></i> العقبة، الأردن</p></div>
+      </div>
+      <div class="footer-bottom"><p>© 2025 موقع مدينة العقبة</p></div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>المساعد الذكي — العقبة</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo"><i class="fas fa-anchor"></i><span>العقبة</span></div>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> عن العقبة</a></li>
+        <li><a href="tourism.html"><i class="fas fa-map-marked-alt"></i> السياحة</a></li>
+        <li><a href="diving.html"><i class="fas fa-fish"></i> الغوص</a></li>
+        <li><a href="history.html"><i class="fas fa-landmark"></i> التاريخ</a></li>
+        <li><a href="hotels.html"><i class="fas fa-hotel"></i> الفنادق</a></li>
+        <li><a href="food.html"><i class="fas fa-utensils"></i> المطاعم</a></li>
+        <li><a href="gallery.html"><i class="fas fa-images"></i> المعرض</a></li>
+        <li><a href="ai.html" class="ai-btn active"><i class="fas fa-robot"></i> مساعد ذكي</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- AI PAGE -->
+  <div class="ai-page">
+    <div class="ai-header">
+      <div class="ai-icon-big"><i class="fas fa-robot"></i></div>
+      <h1>المساعد الذكي للعقبة</h1>
+      <p>اسألني عن أي شيء يخص مدينة العقبة — السياحة، التاريخ، الفنادق، المطاعم، وأكثر!</p>
+    </div>
+
+    <div class="ai-chat-wrapper">
+      <!-- Suggestions -->
+      <div class="ai-suggestions" id="suggestions">
+        <button class="ai-suggestion" onclick="askSuggestion(this)">ما هي أفضل الأماكن السياحية في العقبة؟</button>
+        <button class="ai-suggestion" onclick="askSuggestion(this)">ما هو أفضل وقت لزيارة العقبة؟</button>
+        <button class="ai-suggestion" onclick="askSuggestion(this)">ما هي أفضل فنادق العقبة؟</button>
+        <button class="ai-suggestion" onclick="askSuggestion(this)">أين أجد أفضل مطاعم المأكولات البحرية؟</button>
+        <button class="ai-suggestion" onclick="askSuggestion(this)">كيف أصل إلى العقبة؟</button>
+        <button class="ai-suggestion" onclick="askSuggestion(this)">ما هي تكلفة الإقامة في العقبة؟</button>
+      </div>
+
+      <!-- Chat Box -->
+      <div class="ai-chat-box" id="chatBox">
+        <!-- Welcome message -->
+        <div class="chat-message bot">
+          <div class="chat-avatar"><i class="fas fa-robot"></i></div>
+          <div class="chat-bubble">
+            مرحباً بك! 👋 أنا مساعدك الذكي المتخصص في مدينة العقبة الأردنية. يمكنني الإجابة على جميع أسئلتك حول:
+            <br><br>
+            🏖️ <strong>السياحة والشواطئ</strong><br>
+            🤿 <strong>الغوص والأنشطة البحرية</strong><br>
+            🏰 <strong>التاريخ والمعالم الأثرية</strong><br>
+            🏨 <strong>الفنادق والإقامة</strong><br>
+            🍽️ <strong>المطاعم والطعام</strong><br>
+            ✈️ <strong>المواصلات والوصول</strong><br>
+            <br>
+            ما الذي تريد معرفته عن العقبة؟
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="ai-input-area">
+        <input type="text" id="userInput" placeholder="اكتب سؤالك هنا..." onkeydown="if(event.key==='Enter') sendMessage()" />
+        <button class="ai-send-btn" onclick="sendMessage()" id="sendBtn">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/ai-engine.js"></script>
+  <script>
+    // ===== CHAT FUNCTIONS =====
+
+
+    // ===== CHAT FUNCTIONS =====
+    function addMessage(text, isUser) {
+      const chatBox = document.getElementById('chatBox');
+      const div = document.createElement('div');
+      div.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+      
+      // If user, escape HTML. If bot, render HTML (because we format strong and br)
+      const content = isUser ? escapeHtml(text) : text;
+      
+      div.innerHTML = `
+        <div class="chat-avatar">
+          <i class="fas fa-${isUser ? 'user' : 'robot'}"></i>
+        </div>
+        <div class="chat-bubble">${content}</div>
+      `;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function showTyping() {
+      const chatBox = document.getElementById('chatBox');
+      const div = document.createElement('div');
+      div.className = 'chat-message bot';
+      div.id = 'typingIndicator';
+      div.innerHTML = `
+        <div class="chat-avatar"><i class="fas fa-robot"></i></div>
+        <div class="chat-bubble typing-indicator">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      `;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function removeTyping() {
+      const indicator = document.getElementById('typingIndicator');
+      if (indicator) indicator.remove();
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('userInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      // Add user message
+      addMessage(text, true);
+      input.value = '';
+
+      // Disable send button
+      document.getElementById('sendBtn').disabled = true;
+
+      // Show typing
+      showTyping();
+
+      // Hide suggestions after first message
+      const suggestions = document.getElementById('suggestions');
+      if (suggestions) suggestions.style.display = 'none';
+
+      // Await AI response
+      const response = await getAIResponse(text);
+      
+      removeTyping();
+      addMessage(response, false);
+      document.getElementById('sendBtn').disabled = false;
+    }
+
+    function askSuggestion(btn) {
+      document.getElementById('userInput').value = btn.textContent;
+      sendMessage();
+    }
+
+    // Focus input on load
+    document.getElementById('userInput').focus();
+  </script>
+</body>
+</html>

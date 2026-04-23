@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>معرض صور العقبة</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    .filter-btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; }
+    .filter-btn {
+      background: white; border: 2px solid rgba(0,119,182,0.2);
+      color: var(--gray); padding: 10px 22px; border-radius: 30px;
+      cursor: pointer; font-family: var(--font); font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--gradient); color: white; border-color: transparent;
+    }
+    .gallery-masonry {
+      columns: 3; column-gap: 15px;
+    }
+    .gallery-masonry .gallery-item {
+      break-inside: avoid; margin-bottom: 15px; height: auto;
+    }
+    .gallery-masonry .gallery-item img { height: auto; }
+    .lightbox {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.95); z-index: 9999;
+      align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 12px; object-fit: contain; }
+    .lightbox-close {
+      position: absolute; top: 20px; left: 20px;
+      color: white; font-size: 2rem; cursor: pointer;
+      background: rgba(255,255,255,0.1); width: 50px; height: 50px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      transition: var(--transition);
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+    .lightbox-caption {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      color: white; font-size: 1rem; background: rgba(0,0,0,0.5);
+      padding: 8px 20px; border-radius: 20px;
+    }
+    @media(max-width:768px){ .gallery-masonry { columns: 2; } }
+    @media(max-width:480px){ .gallery-masonry { columns: 1; } }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo"><i class="fas fa-anchor"></i><span>العقبة</span></div>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> عن العقبة</a></li>
+        <li><a href="tourism.html"><i class="fas fa-map-marked-alt"></i> السياحة</a></li>
+        <li><a href="diving.html"><i class="fas fa-fish"></i> الغوص</a></li>
+        <li><a href="history.html"><i class="fas fa-landmark"></i> التاريخ</a></li>
+        <li><a href="hotels.html"><i class="fas fa-hotel"></i> الفنادق</a></li>
+        <li><a href="food.html"><i class="fas fa-utensils"></i> المطاعم</a></li>
+        <li><a href="gallery.html" class="active"><i class="fas fa-images"></i> المعرض</a></li>
+        <li><a href="ai.html" class="ai-btn"><i class="fas fa-robot"></i> مساعد ذكي</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero-bg" style="background-image: url('images/city-aerial.jpg')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1>معرض صور العقبة</h1>
+      <p>لمحات من جمال مدينة العقبة الساحرة</p>
+      <div class="breadcrumb"><a href="index.html">الرئيسية</a> <i class="fas fa-chevron-left"></i> <span>المعرض</span></div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="filter-btns">
+        <button class="filter-btn active" data-filter="all">الكل</button>
+        <button class="filter-btn" data-filter="city">المدينة</button>
+        <button class="filter-btn" data-filter="sea">البحر</button>
+        <button class="filter-btn" data-filter="history">التاريخ</button>
+        <button class="filter-btn" data-filter="hotels">الفنادق</button>
+        <button class="filter-btn" data-filter="night">الليل</button>
+      </div>
+
+      <div class="gallery-masonry" id="galleryGrid">
+        <div class="gallery-item" data-category="city" onclick="openLightbox(this)">
+          <img src="images/city-aerial.jpg" alt="العقبة من الجو" data-caption="العقبة من الجو" />
+          <div class="gallery-overlay"><span>العقبة من الجو</span></div>
+        </div>
+        <div class="gallery-item" data-category="sea" onclick="openLightbox(this)">
+          <img src="images/diving.jpg" alt="الغوص في العقبة" data-caption="الغوص في العقبة" />
+          <div class="gallery-overlay"><span>الغوص في العقبة</span></div>
+        </div>
+        <div class="gallery-item" data-category="history" onclick="openLightbox(this)">
+          <img src="images/castle.webp" alt="قلعة العقبة" data-caption="قلعة العقبة التاريخية" />
+          <div class="gallery-overlay"><span>قلعة العقبة</span></div>
+        </div>
+        <div class="gallery-item" data-category="sea" onclick="openLightbox(this)">
+          <img src="images/marine-life.jpg" alt="الحياة البحرية" data-caption="الحياة البحرية في البحر الأحمر" />
+          <div class="gallery-overlay"><span>الحياة البحرية</span></div>
+        </div>
+        <div class="gallery-item" data-category="city" onclick="openLightbox(this)">
+          <img src="images/flagpole.jpg" alt="عمود العلم" data-caption="عمود علم الثورة العربية الكبرى" />
+          <div class="gallery-overlay"><span>عمود العلم</span></div>
+        </div>
+        <div class="gallery-item" data-category="hotels" onclick="openLightbox(this)">
+          <img src="images/luxury-hotel.jpg" alt="فندق فاخر" data-caption="المنتجعات الفاخرة في العقبة" />
+          <div class="gallery-overlay"><span>المنتجعات الفاخرة</span></div>
+        </div>
+        <div class="gallery-item" data-category="sea" onclick="openLightbox(this)">
+          <img src="images/red-sea.jpg" alt="البحر الأحمر" data-caption="شاطئ البحر الأحمر" />
+          <div class="gallery-overlay"><span>شاطئ البحر الأحمر</span></div>
+        </div>
+        <div class="gallery-item" data-category="city" onclick="openLightbox(this)">
+          <img src="images/marina.webp" alt="مرسى العقبة" data-caption="مرسى العقبة الحديث" />
+          <div class="gallery-overlay"><span>مرسى العقبة</span></div>
+        </div>
+        <div class="gallery-item" data-category="night" onclick="openLightbox(this)">
+          <img src="images/night.webp" alt="العقبة ليلاً" data-caption="العقبة في الليل" />
+          <div class="gallery-overlay"><span>العقبة ليلاً</span></div>
+        </div>
+        <div class="gallery-item" data-category="history" onclick="openLightbox(this)">
+          <img src="images/fortress.jpg" alt="القلعة" data-caption="القلعة العثمانية" />
+          <div class="gallery-overlay"><span>القلعة العثمانية</span></div>
+        </div>
+        <div class="gallery-item" data-category="hotels" onclick="openLightbox(this)">
+          <img src="images/hotel.jpg" alt="فندق إنتركونتيننتال" data-caption="إنتركونتيننتال العقبة" />
+          <div class="gallery-overlay"><span>إنتركونتيننتال العقبة</span></div>
+        </div>
+        <div class="gallery-item" data-category="sea" onclick="openLightbox(this)">
+          <img src="images/scuba.jpeg" alt="الغوص" data-caption="غواص في البحر الأحمر" />
+          <div class="gallery-overlay"><span>غواص في البحر الأحمر</span></div>
+        </div>
+        <div class="gallery-item" data-category="sea" onclick="openLightbox(this)">
+          <img src="images/beach.jpeg" alt="شاطئ العقبة" data-caption="شاطئ العقبة الجميل" />
+          <div class="gallery-overlay"><span>شاطئ العقبة</span></div>
+        </div>
+        <div class="gallery-item" data-category="hotels" onclick="openLightbox(this)">
+          <img src="images/resort.jpg" alt="منتجع" data-caption="منتجع العقبة" />
+          <div class="gallery-overlay"><span>منتجع العقبة</span></div>
+        </div>
+        <div class="gallery-item" data-category="city" onclick="openLightbox(this)">
+          <img src="images/city-view.jpg" alt="مدينة العقبة" data-caption="منظر عام لمدينة العقبة" />
+          <div class="gallery-overlay"><span>مدينة العقبة</span></div>
+        </div>
+        <div class="gallery-item" data-category="sea" onclick="openLightbox(this)">
+          <img src="images/gulf.jpg" alt="خليج العقبة" data-caption="خليج العقبة" />
+          <div class="gallery-overlay"><span>خليج العقبة</span></div>
+        </div>
+        <div class="gallery-item" data-category="sea" onclick="openLightbox(this)">
+          <img src="images/diving2.jpg" alt="الغوص" data-caption="الغوص في أعماق البحر" />
+          <div class="gallery-overlay"><span>أعماق البحر</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></div>
+    <img src="" alt="" id="lightboxImg" />
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><div class="footer-logo"><i class="fas fa-anchor"></i> العقبة</div><p>جوهرة البحر الأحمر</p><div class="footer-social"><a href="mailto:kalel00hsham@gmail.com" title="البريد الإلكتروني"><i class="fas fa-envelope"></i></a><a href="https://instagram.com/kalel_ahsnat" target="_blank" title="إنستغرام"><i class="fab fa-instagram"></i></a></div></div>
+        <div class="footer-links"><h4>روابط سريعة</h4><ul><li><a href="index.html">الرئيسية</a></li><li><a href="tourism.html">السياحة</a></li><li><a href="gallery.html">المعرض</a></li></ul></div>
+        <div class="footer-links"><h4>خدمات</h4><ul><li><a href="hotels.html">الفنادق</a></li><li><a href="food.html">المطاعم</a></li><li><a href="ai.html">المساعد الذكي</a></li></ul></div>
+        <div class="footer-contact"><h4>تواصل معنا</h4><p><i class="fas fa-map-marker-alt"></i> العقبة، الأردن</p></div>
+      </div>
+      <div class="footer-bottom"><p>© 2025 موقع مدينة العقبة</p></div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.gallery-item').forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Lightbox
+    function openLightbox(el) {
+      const img = el.querySelector('img');
+      document.getElementById('lightboxImg').src = img.src;
+      document.getElementById('lightboxImg').alt = img.alt;
+      document.getElementById('lightboxCaption').textContent = img.dataset.caption || img.alt;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

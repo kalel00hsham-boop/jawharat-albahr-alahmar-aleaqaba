@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>فنادق العقبة</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    .hotels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+    @media(max-width:1024px){.hotels-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:600px){.hotels-grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo"><i class="fas fa-anchor"></i><span>العقبة</span></div>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> عن العقبة</a></li>
+        <li><a href="tourism.html"><i class="fas fa-map-marked-alt"></i> السياحة</a></li>
+        <li><a href="diving.html"><i class="fas fa-fish"></i> الغوص</a></li>
+        <li><a href="history.html"><i class="fas fa-landmark"></i> التاريخ</a></li>
+        <li><a href="hotels.html" class="active"><i class="fas fa-hotel"></i> الفنادق</a></li>
+        <li><a href="food.html"><i class="fas fa-utensils"></i> المطاعم</a></li>
+        <li><a href="gallery.html"><i class="fas fa-images"></i> المعرض</a></li>
+        <li><a href="ai.html" class="ai-btn"><i class="fas fa-robot"></i> مساعد ذكي</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero-bg" style="background-image: url('images/hotel.jpg')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1>فنادق العقبة</h1>
+      <p>اختر إقامتك المثالية من بين أفخم الفنادق والمنتجعات</p>
+      <div class="breadcrumb"><a href="index.html">الرئيسية</a> <i class="fas fa-chevron-left"></i> <span>الفنادق</span></div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">أفضل الإقامات</div>
+        <h2>فنادق ومنتجعات العقبة</h2>
+        <p>تتوفر في العقبة مجموعة متنوعة من الفنادق الفاخرة والمنتجعات المطلة على البحر الأحمر</p>
+      </div>
+      <div class="hotels-grid">
+        <div class="hotel-card">
+          <img src="images/luxury-hotel.jpg" alt="المنارة" />
+          <div class="hotel-body">
+            <h3>المنارة — لاكشري كولكشن</h3>
+            <div class="hotel-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>منتجع فاخر من سلسلة ماريوت يطل مباشرة على البحر الأحمر. يتميز بتصميم معماري أردني أصيل ويقدم تجربة إقامة استثنائية.</p>
+            <div class="hotel-features">
+              <span class="hotel-feature"><i class="fas fa-swimming-pool"></i> حمام سباحة</span>
+              <span class="hotel-feature"><i class="fas fa-spa"></i> سبا</span>
+              <span class="hotel-feature"><i class="fas fa-wifi"></i> واي فاي</span>
+              <span class="hotel-feature"><i class="fas fa-utensils"></i> مطاعم</span>
+            </div>
+          </div>
+        </div>
+        <div class="hotel-card">
+          <img src="images/hotel.jpg" alt="إنتركونتيننتال" />
+          <div class="hotel-body">
+            <h3>إنتركونتيننتال العقبة</h3>
+            <div class="hotel-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>فندق خمس نجوم يقع على شاطئ خاص يمتد لـ 300 متر. يضم 255 غرفة وجناحاً فاخراً مع إطلالات بانورامية على البحر الأحمر.</p>
+            <div class="hotel-features">
+              <span class="hotel-feature"><i class="fas fa-umbrella-beach"></i> شاطئ خاص</span>
+              <span class="hotel-feature"><i class="fas fa-dumbbell"></i> صالة رياضية</span>
+              <span class="hotel-feature"><i class="fas fa-concierge-bell"></i> خدمة 24/7</span>
+            </div>
+          </div>
+        </div>
+        <div class="hotel-card">
+          <img src="images/resort.jpg" alt="لاكسوتيل" />
+          <div class="hotel-body">
+            <h3>لاكسوتيل بيتش ريزورت</h3>
+            <div class="hotel-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>منتجع عصري يجمع بين الفخامة والأجواء المريحة. يتميز بمسبحه الرائع وحديقته الخضراء المطلة على البحر.</p>
+            <div class="hotel-features">
+              <span class="hotel-feature"><i class="fas fa-swimming-pool"></i> مسبح لانهائي</span>
+              <span class="hotel-feature"><i class="fas fa-fish"></i> مركز غوص</span>
+              <span class="hotel-feature"><i class="fas fa-wifi"></i> واي فاي</span>
+            </div>
+          </div>
+        </div>
+        <div class="hotel-card">
+          <img src="images/marina.webp" alt="فندق أيلة" />
+          <div class="hotel-body">
+            <h3>منتجع أيلة</h3>
+            <div class="hotel-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>مجمع سياحي متكامل يضم فيلات وشقق فاخرة مطلة على المرسى. يوفر بيئة هادئة ومريحة بعيداً عن ضجيج المدينة.</p>
+            <div class="hotel-features">
+              <span class="hotel-feature"><i class="fas fa-ship"></i> مرسى خاص</span>
+              <span class="hotel-feature"><i class="fas fa-golf-ball"></i> ملعب جولف</span>
+              <span class="hotel-feature"><i class="fas fa-spa"></i> سبا</span>
+            </div>
+          </div>
+        </div>
+        <div class="hotel-card">
+          <img src="images/city-view.jpg" alt="فندق المدينة" />
+          <div class="hotel-body">
+            <h3>فندق العقبة الكبير</h3>
+            <div class="hotel-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>فندق راقٍ في قلب المدينة يوفر سهولة الوصول إلى جميع المعالم السياحية والمراكز التجارية. يتميز بأسعاره التنافسية.</p>
+            <div class="hotel-features">
+              <span class="hotel-feature"><i class="fas fa-map-marker-alt"></i> موقع مركزي</span>
+              <span class="hotel-feature"><i class="fas fa-car"></i> موقف سيارات</span>
+              <span class="hotel-feature"><i class="fas fa-utensils"></i> مطعم</span>
+            </div>
+          </div>
+        </div>
+        <div class="hotel-card">
+          <img src="images/night.webp" alt="فندق الكورنيش" />
+          <div class="hotel-body">
+            <h3>فندق كورنيش العقبة</h3>
+            <div class="hotel-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>فندق مريح بأسعار معقولة يقع على الكورنيش مباشرة. خيار ممتاز للعائلات والأزواج الباحثين عن إقامة مريحة بميزانية متوسطة.</p>
+            <div class="hotel-features">
+              <span class="hotel-feature"><i class="fas fa-eye"></i> إطلالة بحرية</span>
+              <span class="hotel-feature"><i class="fas fa-wifi"></i> واي فاي مجاني</span>
+              <span class="hotel-feature"><i class="fas fa-coffee"></i> إفطار مجاني</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quick-info">
+    <div class="container">
+      <div class="info-cards">
+        <div class="info-card"><i class="fas fa-calendar-check"></i><h4>أفضل وقت للزيارة</h4><p>من أكتوبر حتى أبريل للاستمتاع بالطقس المعتدل</p></div>
+        <div class="info-card"><i class="fas fa-money-bill-wave"></i><h4>الأسعار</h4><p>تتراوح بين 50-500 دينار أردني في الليلة حسب الفندق</p></div>
+        <div class="info-card"><i class="fas fa-car"></i><h4>المواصلات</h4><p>تتوفر سيارات أجرة وخدمات نقل من وإلى المطار</p></div>
+        <div class="info-card"><i class="fas fa-phone"></i><h4>الحجز</h4><p>احجز مبكراً خاصة في موسم الذروة (ديسمبر - فبراير)</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><div class="footer-logo"><i class="fas fa-anchor"></i> العقبة</div><p>جوهرة البحر الأحمر</p><div class="footer-social"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div>
+        <div class="footer-links"><h4>روابط سريعة</h4><ul><li><a href="index.html">الرئيسية</a></li><li><a href="tourism.html">السياحة</a></li><li><a href="hotels.html">الفنادق</a></li></ul></div>
+        <div class="footer-links"><h4>خدمات</h4><ul><li><a href="food.html">المطاعم</a></li><li><a href="gallery.html">المعرض</a></li><li><a href="ai.html">المساعد الذكي</a></li></ul></div>
+        <div class="footer-contact"><h4>تواصل معنا</h4><p><i class="fas fa-map-marker-alt"></i> العقبة، الأردن</p></div>
+      </div>
+      <div class="footer-bottom"><p>© 2025 موقع مدينة العقبة</p></div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
